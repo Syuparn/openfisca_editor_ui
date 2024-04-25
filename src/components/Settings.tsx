@@ -5,15 +5,23 @@ import APIKey from "./APIKey"
 import { geminiHandler } from "../gemini/gemini"
 import { APIKeyContext } from "../contexts/apiKeyContext"
 import { useContext } from "react"
+import { ResponseContext } from "../contexts/responseContext"
 
 function Settings() {
   const { apiKey } = useContext(APIKeyContext)
+  const { setResponse } = useContext(ResponseContext)
+
+  const run = async(): Promise<void> => {
+    const sendPrompt = geminiHandler(apiKey)
+    const prompt = 'How many paws are in my house?'
+
+    const response = await sendPrompt(prompt)
+    setResponse(response)
+  }
 
   const onClick = () => {
-    const run = geminiHandler(apiKey)
-
-    run('How many paws are in my house?').then((result: string) => {
-      console.log(result)
+    run().catch(e => {
+      alert(`リクエスト中に予期せぬエラーが発生しました: ${e}`)
     })
   }
 
