@@ -12,7 +12,7 @@ function Prompt() {
         <Button>送信</Button>
       </HStack>
       <Textarea
-        value={'以下レビューに従って修正してください。\n\n- `○○制度` で、配偶者がいる場合 `××控除` は加算されません。'}
+        defaultValue={'以下レビューに従って修正してください。\n\n- `○○制度` で、配偶者がいる場合 `××控除` は加算されません。'}
         rows={20}
         height='auto'
       >
