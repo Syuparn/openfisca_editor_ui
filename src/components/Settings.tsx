@@ -6,16 +6,32 @@ import { geminiHandler } from "../gemini/gemini"
 import { APIKeyContext } from "../contexts/apiKeyContext"
 import { useContext } from "react"
 import { ResponseContext } from "../contexts/responseContext"
+import { exampleSrc, getExampleData, instruction } from "../openfisca/example"
+import { fetchRulePage } from "../openfisca/rule"
+import { RuleURLContext } from "../contexts/ruleURLContext"
+import { RuleNameContext } from "../contexts/ruleNameContext"
+import { makePrompt } from "../openfisca/prompt"
 
 function Settings() {
   const { apiKey } = useContext(APIKeyContext)
   const { setResponse } = useContext(ResponseContext)
+  const { ruleURL } = useContext(RuleURLContext)
+  const { ruleName } = useContext(RuleNameContext)
 
   const run = async(): Promise<void> => {
     const sendPrompt = geminiHandler(apiKey)
-    const prompt = 'How many paws are in my house?'
 
-    const response = await sendPrompt(prompt)
+    const exampleRule = await getExampleData()
+    const ruleContent = await fetchRulePage(ruleURL)
+
+    const rule = {
+      name: ruleName,
+      content: ruleContent,
+    }
+
+    const prompt = makePrompt(exampleRule, exampleSrc, rule)
+
+    const response = await sendPrompt(instruction, prompt)
     setResponse(response)
   }
 

@@ -4,17 +4,17 @@ export function geminiHandler(apiKey: string) {
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-  return async (prompt: string): Promise<string> => {
+  return async (instruction: string, prompt: string): Promise<string> => {
     const chat = model.startChat({
       history: [
         {
           role: "user",
-          parts: [{ text: "Hello, I have 2 dogs in my house." }],
+          parts: [{ text: instruction }],
         },
         // NOTE: Geminiのダミー返答を記載しないとエラーが発生する（交互に会話する必要があるため）
         {
           role: "model",
-          parts: [{ text: "Great to meet you. What would you like to know?" }],
+          parts: [{ text: "分かりました。" }],
         },
       ],
       generationConfig: {

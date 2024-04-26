@@ -1,6 +1,9 @@
 import { RuleData } from "./prompt";
 import { fetchRulePage } from "./rule";
 
+export const exampleRuleName = '児童育成手当'
+export const exampleRuleURL = 'https://www.city.shibuya.tokyo.jp/kodomo/teate/hitorioya/hitorioya_teate.html'
+
 /*
   This source code is from https://github.com/project-inclusive/OpenFisca-Japan
   GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007

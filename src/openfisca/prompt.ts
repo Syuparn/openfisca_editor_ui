@@ -1,4 +1,4 @@
-import dedent from 'dedent'
+import dedent from 'ts-dedent'
 
 export type RuleData = {
   name: string
